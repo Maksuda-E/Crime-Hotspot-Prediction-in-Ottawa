@@ -15,6 +15,10 @@ This is an **academic group project** completed as part of an Machine learning c
 - Performance comparison across multiple train-test splits  
 - Result interpretation and conclusion writing  
 
+## Data Files
+- `Criminal_Offences.csv`: Original dataset from Ottawa Police Service
+- `Criminal_Offences_final_cleaned.csv`: Preprocessed dataset used for modeling
+
 
 ## 📊 Dataset Information
 **Source:** Ottawa Police Service  
