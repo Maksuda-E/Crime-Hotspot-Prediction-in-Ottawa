@@ -63,7 +63,7 @@ The cleaned dataset was saved as: Criminal_Offences_final_cleaned.csv
 
 ---
 
-## 🤖 Machine Learning Models
+## Machine Learning Models
 The following models were implemented and evaluated:
 
 - **Decision Tree Classifier**
