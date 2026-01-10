@@ -2,7 +2,7 @@
 
 ## Project Overview
 This project analyzes and predicts crime hotspots in Ottawa using machine learning techniques.  
-The dataset contains all founded Criminal Code of Canada offences reported to the Ottawa Police Service from **2017 to 2021**.  
+The dataset contains all founded Criminal Code of Canada offences reported to the Ottawa Police Service from **2016 to 2022**.  
 For privacy protection, all crime locations are geomasked to the nearest intersection.
 
 This is an **academic group project** completed as part of an Machine learning course (Level 1).
