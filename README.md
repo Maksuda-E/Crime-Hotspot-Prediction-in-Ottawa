@@ -16,9 +16,7 @@ This is an **academic group project** completed as part of an Machine learning c
 - Result interpretation and conclusion writing  
 
 ## Data Files
-- `Criminal_Offences.csv`: Original dataset from Ottawa Police Service
 - `Criminal_Offences_final_cleaned.csv`: Preprocessed dataset used for modeling
-
 
 ## 📊 Dataset Information
 **Source:** Ottawa Police Service  
@@ -29,6 +27,8 @@ This is an **academic group project** completed as part of an Machine learning c
 The dataset includes all founded criminal offences categorized using the **Uniform Crime Reporting (UCR) Survey**.
 
 **Important Notes:**
+- The original raw dataset is not included due to file size limitations and because the source is no longer publicly available.  
+  This repository contains the cleaned dataset used for analysis and modeling.
 - Data may change due to ongoing investigations and quality checks
 
 ## 🧾 Dataset Attributes
