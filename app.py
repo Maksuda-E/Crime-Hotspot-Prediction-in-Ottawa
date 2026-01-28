@@ -23,6 +23,9 @@ st.title("Crime Hotspot Prediction Ottawa")
 st.write(
     "This application analyzes crime data, visualizes patterns, "
     "and identifies hotspot areas using interactive maps and a simple machine learning model."
+    "Note: This hosted app runs on a cleaned and sampled subset of the original Ottawa crime dataset "
+    "due to file size limits. The same preprocessing, analysis, and modeling pipeline supports the full raw dataset "
+    "when uploaded or run locally."
 )
 
 
