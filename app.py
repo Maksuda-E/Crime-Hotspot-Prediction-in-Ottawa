@@ -103,20 +103,52 @@ if uploaded_file is not None:
 
     # Map visualization
     st.subheader("Crime Locations Map")
-    st.map(df[["Y", "X"]].rename(columns={"Y": "lat", "X": "lon"}))
 
-    # Feature importance
-    st.subheader("Feature Importance")
+    # Make a safe map dataframe
+    df_map = df[["Y", "X"]].copy()
 
-    importance_df = pd.DataFrame({
-        "Feature": features,
-        "Importance": model.feature_importances_
-    }).sort_values(by="Importance", ascending=False)
+    # Convert to numeric
+    df_map["Y"] = pd.to_numeric(df_map["Y"], errors="coerce")
+    df_map["X"] = pd.to_numeric(df_map["X"], errors="coerce")
 
-    fig2, ax2 = plt.subplots()
-    ax2.barh(importance_df["Feature"], importance_df["Importance"])
-    ax2.invert_yaxis()
-    st.pyplot(fig2)
+    # Drop missing
+    df_map = df_map.dropna(subset=["Y", "X"])
+
+    # Rename for streamlit
+    df_map = df_map.rename(columns={"Y": "lat", "X": "lon"})
+
+    # Debug info
+    st.write("Rows available for map:", len(df_map))
+    if len(df_map) > 0:
+        st.write(
+            "Latitude range:",
+            float(df_map["lat"].min()),
+            "to",
+            float(df_map["lat"].max())
+        )
+        st.write(
+            "Longitude range:",
+            float(df_map["lon"].min()),
+            "to",
+            float(df_map["lon"].max())
+        )
+        st.dataframe(df_map.head())
+
+    # Validate lat lon
+    df_map_valid = df_map[
+        (df_map["lat"].between(-90, 90)) &
+        (df_map["lon"].between(-180, 180))
+    ].copy()
+
+    st.write("Rows with valid lat lon:", len(df_map_valid))
+
+    if len(df_map_valid) == 0:
+        st.error(
+            "No valid latitude and longitude values found. "
+            "X and Y may be projected coordinates, not lat lon."
+        )
+    else:
+        st.map(df_map_valid)
 
 else:
     st.info("Please upload a CSV file to begin.")
