@@ -1,8 +1,6 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
-
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
@@ -82,14 +80,21 @@ if uploaded_file is not None:
     st.subheader("Model Performance")
     st.write(f"Accuracy: {accuracy:.2f}")
 
-    # Confusion matrix
-    cm = confusion_matrix(y_test, y_pred)
+   # Confusion matrix
+   cm = confusion_matrix(y_test, y_pred)
 
-    fig, ax = plt.subplots()
-    sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", ax=ax)
-    ax.set_xlabel("Predicted")
-    ax.set_ylabel("Actual")
+   fig, ax = plt.subplots()
+   ax.imshow(cm)
+
+   ax.set_xlabel("Predicted")
+   ax.set_ylabel("Actual")
+
+    for i in range(len(cm)):
+    for j in range(len(cm)):
+        ax.text(j, i, cm[i, j], ha="center", va="center")
+
     st.pyplot(fig)
+
 
     # Map visualization
     st.subheader("Crime Locations Map")
