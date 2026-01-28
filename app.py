@@ -27,7 +27,11 @@ st.write(
     "due to file size limits. The same preprocessing, analysis, and modeling pipeline supports the full raw dataset "
     "when uploaded or run locally."
 )
-
+st.write(
+    "Note: This hosted app runs on a cleaned and sampled subset of the original Ottawa crime dataset "
+    "due to file size limits. The same preprocessing, analysis, and modeling pipeline supports the full raw dataset "
+    "when uploaded or run locally."
+)
 
 # Function to convert Web Mercator coordinates to latitude and longitude
 def web_mercator_to_wgs84(x, y):
