@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
@@ -27,7 +28,7 @@ if uploaded_file is not None:
     st.subheader("Dataset Preview")
     st.dataframe(df.head())
 
-    # Check required columns
+    # Required columns check
     required_columns = ["X", "Y", "Sector", "Division", "Neighbourh", "Weekday"]
     missing_cols = [col for col in required_columns if col not in df.columns]
 
@@ -35,7 +36,7 @@ if uploaded_file is not None:
         st.error(f"Missing required columns: {missing_cols}")
         st.stop()
 
-    # Data cleaning
+    # Drop missing coordinates
     df = df.dropna(subset=["X", "Y"])
 
     # Clean Sector column
@@ -53,9 +54,11 @@ if uploaded_file is not None:
         df[col] = encoder.fit_transform(df[col].astype(str))
 
     # Create target variable
-    df["Hotspot"] = (df.groupby("Neighbourh")["Neighbourh"].transform("count") > 50).astype(int)
+    df["Hotspot"] = (
+        df.groupby("Neighbourh")["Neighbourh"].transform("count") > 50
+    ).astype(int)
 
-    # Feature selection
+    # Features and target
     features = ["X", "Y", "Sector", "Division", "Neighbourh", "Weekday"]
     X = df[features]
     y = df["Hotspot"]
@@ -66,35 +69,37 @@ if uploaded_file is not None:
 
     # Train test split
     X_train, X_test, y_train, y_test = train_test_split(
-        X_scaled, y, test_size=0.2, random_state=42
+        X_scaled,
+        y,
+        test_size=0.2,
+        random_state=42
     )
 
     # Train model
     model = RandomForestClassifier(random_state=42)
     model.fit(X_train, y_train)
 
-    # Predictions
+    # Predict
     y_pred = model.predict(X_test)
     accuracy = accuracy_score(y_test, y_pred)
 
     st.subheader("Model Performance")
     st.write(f"Accuracy: {accuracy:.2f}")
 
-   # Confusion matrix
-   cm = confusion_matrix(y_test, y_pred)
+    # Confusion matrix
+    cm = confusion_matrix(y_test, y_pred)
 
-   fig, ax = plt.subplots()
-   ax.imshow(cm)
+    fig, ax = plt.subplots()
+    ax.imshow(cm)
 
-   ax.set_xlabel("Predicted")
-   ax.set_ylabel("Actual")
+    ax.set_xlabel("Predicted")
+    ax.set_ylabel("Actual")
 
     for i in range(len(cm)):
-    for j in range(len(cm)):
-        ax.text(j, i, cm[i, j], ha="center", va="center")
+        for j in range(len(cm)):
+            ax.text(j, i, cm[i, j], ha="center", va="center")
 
     st.pyplot(fig)
-
 
     # Map visualization
     st.subheader("Crime Locations Map")
